@@ -1,15 +1,5 @@
 import React, { useState } from 'react';
-import {
-  View,
-  Text,
-  TextInput,
-  Button,
-  Alert,
-  ActivityIndicator,
-  StyleSheet,
-  KeyboardAvoidingView,
-  Platform,
-} from 'react-native';
+import {View, Text, TextInput, Button, Alert, ActivityIndicator, StyleSheet, KeyboardAvoidingView, Platform} from 'react-native';
 import { getUsers, login } from '../api/auth';
 
 function LoginScreen({ navigation }) {

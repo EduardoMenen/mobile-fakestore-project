@@ -1,10 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Button, StyleSheet } from 'react-native';
-import {
-  getProducts,
-  getCategories,
-  getProductsByCategory,
-} from '../api/products';
+import {  getProducts, getCategories,getProductsByCategory} from '../api/products';
 import ProductCard from '../components/ProductCard';
 import Loading from '../components/Loading';
 import CategoryFilter from '../components/CategoryFilter';
@@ -89,8 +85,11 @@ function HomeScreen({ navigation }) {
             data={products}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-                <ProductCard product={item} onPress={() => {}} />
-            )}
+                <ProductCard
+                    product={item}
+                    onPress={() => navigation.navigate('ProductDetail', { productId: item.id })}
+                />
+                )}
             contentContainerStyle={styles.list}
             />
         )}
