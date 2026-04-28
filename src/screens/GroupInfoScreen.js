@@ -13,7 +13,7 @@ function GroupInfoScreen() {
         <View style={styles.header}>
             <Text style={styles.title}>Informações do Grupo</Text>
             <Text style={styles.subtitle}>
-            Aplicativo desenvolvido como trabalho acadêmico de React Native, consumindo dados da Fake Store API.
+            Aplicativo desenvolvido como trabalho acadêmico de Projeto, Design e Engenharia de Processos, consumindo dados da Fake Store API.
             </Text>
         </View>
 
