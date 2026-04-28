@@ -1,35 +1,59 @@
 import React, { useState, useEffect } from 'react';
 import { View, Text, FlatList, Button, StyleSheet } from 'react-native';
-import { getProducts } from '../api/products';
+import {
+  getProducts,
+  getCategories,
+  getProductsByCategory,
+} from '../api/products';
 import ProductCard from '../components/ProductCard';
 import Loading from '../components/Loading';
+import CategoryFilter from '../components/CategoryFilter';
 
 function HomeScreen({ navigation }) {
     const [products, setProducts] = useState([]);
+    const [categories, setCategories] = useState([]);
+    const [selectedCategory, setSelectedCategory] = useState('');
     const [loading, setLoading] = useState(true);
     const [error, setError] = useState(false);
+    console.log('Categories state:', categories);
+    console.log('Selected:', selectedCategory);
 
-    async function loadProducts() {
+    useEffect(() => {
+        async function loadCategories() {
+        try {
+            const data = await getCategories();
+            setCategories(data);
+        } catch (err) {
+            console.log('Erro ao carregar categorias:', err);
+        }
+        }
+
+        loadCategories();
+    }, []);
+
+    useEffect(() => {
+        async function loadProducts() {
         setLoading(true);
         setError(false);
 
         try {
-        const data = await getProducts();
-        setProducts(data);
+            const data = selectedCategory
+            ? await getProductsByCategory(selectedCategory)
+            : await getProducts();
+            setProducts(data);
         } catch (err) {
-        console.log('Erro ao carregar produtos:', err);
-        setError(true);
+            console.log('Erro ao carregar produtos:', err);
+            setError(true);
         } finally {
-        setLoading(false);
+            setLoading(false);
         }
-    }
+        }
 
-    useEffect(() => {
         loadProducts();
-    }, []);
+    }, [selectedCategory]);
 
-    if (loading) {
-        return <Loading message="Carregando produtos..." />;
+    function handleClearFilter() {
+        setSelectedCategory('');
     }
 
     if (error) {
@@ -39,21 +63,37 @@ function HomeScreen({ navigation }) {
             <Text style={styles.errorMessage}>
             Não foi possível carregar os produtos. Verifique sua conexão e tente novamente.
             </Text>
-            <Button title="Tentar novamente" onPress={loadProducts} />
+            <Button
+            title="Tentar novamente"
+            onPress={() => setSelectedCategory(selectedCategory)}
+            />
         </View>
         );
     }
 
     return (
         <View style={styles.container}>
-        <FlatList
+        <View style={styles.filterContainer}>
+            <CategoryFilter
+            categories={categories}
+            selected={selectedCategory}
+            onChange={setSelectedCategory}
+            onClear={handleClearFilter}
+            />
+        </View>
+
+        {loading ? (
+            <Loading message="Carregando produtos..." />
+        ) : (
+            <FlatList
             data={products}
             keyExtractor={(item) => item.id.toString()}
             renderItem={({ item }) => (
-            <ProductCard product={item} onPress={() => {}} />
+                <ProductCard product={item} onPress={() => {}} />
             )}
             contentContainerStyle={styles.list}
-        />
+            />
+        )}
         </View>
     );
 }
@@ -62,6 +102,10 @@ const styles = StyleSheet.create({
     container: {
         flex: 1,
         backgroundColor: '#f5f5f5',
+    },
+    filterContainer: {
+        paddingHorizontal: 12,
+        paddingTop: 12,
     },
     list: {
         padding: 12,
