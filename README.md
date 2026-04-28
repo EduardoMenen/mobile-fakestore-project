@@ -78,11 +78,9 @@ https://fakestoreapi.com/users
 | Nome completo               | RA        |
 |-----------------------------|-----------|
 | Eduardo Menenegazzo Riboli  | 1136488   |
-|-----------------------------|-----------|
+| Caio do Prado Stachelski    | 1137003   |
 | Jean Demarchi               | 1136156   |
-|-----------------------------|-----------|
 | Vitor Valduga Modesti       | 1136127   |
-|-----------------------------|-----------|
 
 ## 📁 Estrutura do projeto
 

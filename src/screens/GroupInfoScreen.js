@@ -3,6 +3,7 @@ import { View, Text, ScrollView, StyleSheet } from 'react-native';
 
 const groupMembers = [
     { name: 'Eduardo Menegazzo Riboli', ra: '1136488' },
+    { name: 'Caio do Prado Stachelski', ra: '1137003'},
     { name: 'Jean Demarchi', ra: '1136156'},
     { name: 'Vitor Valduga Modesti', ra: '1136127'}
 ];
